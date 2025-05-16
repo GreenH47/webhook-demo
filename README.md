@@ -1,104 +1,103 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+# URL
+domain: https://webhook-demo-one.vercel.app/  
+dashboard: https://vercel.com/greens-projects-3e30f4e0/webhook-demo  
+supabase: https://supabase.com/dashboard/project/pdjqoyqsgaijfclkaiux/editor  
+GitHub Repo: https://github.com/GreenH47/webhook-demo  
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
+# objectives
+Build a Next.js application with a landing page and dashboard that:
+构建一个带有登录页面和仪表板的 Next.js 应用程序， 该应用程序：
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+✅ Accepts form inputs from multiple users
+✅ 接受来自多个用户的表单输入
+🔗 Sends data to a webhook
+🔗 将数据发送到 webhook
 
-## Features
+🖥️ Displays data received from the webhook in real-time or near real-time
+🖥️ 实时或近实时显示从 webhook 接收的数据
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Middleware
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Components with [shadcn/ui](https://ui.shadcn.com/)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
+👥 Supports concurrent users — data must be user-specific and not clash across sessions
+👥 支持并发用户 - 数据必须是特定于用户的，并且不能在会话之间发生冲突
 
-## Demo
+## 📌 Tasks and Requirements
+📌 任务和要求
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+✅ 1. Setup  ✅ 1. 设置
+Create a Next.js App Router project
+创建 Next.js App Router 项目
 
-## Deploy to Vercel
+Push it to a public GitHub repository
+将其推送到公共 GitHub 存储库
 
-Vercel deployment will guide you through creating a Supabase account and project.
+Use TypeScript, Tailwind CSS, and modern Next.js conventions
+使用 TypeScript 、 Tailwind CSS 和现代 Next.js 约定
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
+✅ 2. Routing & Structure
+✅ 2. 路由和结构
+Create two main routes using the App Router:
+使用 App Router 创建两个主要路由：
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This+starter+configures+Supabase+Auth+to+use+cookies%2C+making+the+user%27s+session+available+throughout+the+entire+Next.js+app+-+Client+Components%2C+Server+Components%2C+Route+Handlers%2C+Server+Actions+and+Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png)
+/ → Landing Page (brief intro + link to dashboard)
+/ → 登陆页面（简介 + 仪表板链接）
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+/dashboard → Form Input + Data Display
+/dashboard → 表单输入 + 数据显示
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+✅ 3. Form Input  ✅ 3. 表单输入
+On the /dashboard:
+在 /dashboard 上：
 
-## Clone and run locally
+Create a simple form with the following fields:
+创建一个包含以下字段的简单表单：
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
+🧑 Name (string)  🧑 名称（字符串）
 
-2. Create a Next.js app using the Supabase Starter template npx command
+💬 Message (string)  💬 消息（字符串）
 
-   ```bash
-   npx create-next-app --example with-supabase with-supabase-app
-   ```
+🆔 Unique User ID (string, auto-generated or typed manually)
+🆔 唯一用户 ID（字符串，自动生成或手动输入）
 
-   ```bash
-   yarn create next-app --example with-supabase with-supabase-app
-   ```
+On submit, send the payload to a webhook endpoint (mock or real)
+提交时，将有效负载发送到 webhook 端点（模拟或真实）
 
-   ```bash
-   pnpm create next-app --example with-supabase with-supabase-app
-   ```
+✅ 4. Webhook Setup  ✅ 4. Webhook 设置
+Will be provided  将提供
 
-3. Use `cd` to change into the app's directory
+✨ 5. Bonus (Optional but impressive)
+✨ 5. 奖金（可选但令人印象深刻）
 
-   ```bash
-   cd with-supabase-app
-   ```
+Persist data via Supabase, Firebase, or a simple Express.js API if going full-stack
+如果采用全栈方式，则通过 Supabase 、 Firebase 或简单的 Express.js API 来持久化数据
 
-4. Rename `.env.example` to `.env.local` and update the following:
+## 📦 Sample Deliverables  📦 交付样品
 
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=[INSERT SUPABASE PROJECT API ANON KEY]
-   ```
+GitHub Repo: https://github.com/GreenH47/webhook-demo
 
-   Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` can be found in [your Supabase project's API settings](https://app.supabase.com/project/_/settings/api)
 
-5. You can now run the Next.js local development server:
 
-   ```bash
-   npm run dev
-   ```
+Live Demo: Deploy via Vercel
 
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
+现场演示：通过 Vercel 部署
 
-6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
+# run it locally
+develop base on the template vercel/next.js - Supabase Starter
+https://vercel.com/templates/next.js/supabase 
 
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
+Clone the repository
+```bash
+git clone https://github.com/GreenH47/webhook-demo.git
 
-## Feedback and issues
+cd webhook-demo
+```
 
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
+Get the credentials
+```bash 
+npx vercel link 
+npx vercel env pull .env.local
+```  
 
-## More Supabase examples
-
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+Install dependencies and run the app
+```bash
+npm install
+npm run dev
+```
