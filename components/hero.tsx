@@ -37,6 +37,8 @@ export default function Header() {
               Green Huang Demo for Front End Developer intern
           </p>
           <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8"/>
+
+
       </div>
   );
 }
