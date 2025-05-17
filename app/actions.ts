@@ -44,8 +44,7 @@ export const signInAction = async (formData: FormData) => {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const supabase = await createClient();
-
-  const redirectTo = formData.get("redirectTo")?.toString()
+  const redirectTo = formData.get("redirectTo")?.toString() || "/dashboard";
 
   const { error } = await supabase.auth.signInWithPassword({
     email,
@@ -56,10 +55,12 @@ export const signInAction = async (formData: FormData) => {
     return encodedRedirect("error", "/sign-in", error.message);
   }
 
-  // optionally: whitelist internal paths to prevent open redirects
-  if (!redirectTo?.startsWith("/")) return redirect("/dashboard");
+  // 🔒 guard against open-redirects
+  if (!redirectTo.startsWith("/")) {
+    return redirect("/");
+  }
 
-  return redirect(<string>redirectTo);   // NO MORE /protected
+  return redirect(redirectTo);
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {
