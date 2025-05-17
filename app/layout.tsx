@@ -57,6 +57,10 @@ export default function RootLayout({
                       Dashboard
                     </Link>
 
+                    <Link href="https://github.com/GreenH47/webhook-demo" className="hover:underline">
+                      Github Repo
+                    </Link>
+
 
                   </div>
                   {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}
