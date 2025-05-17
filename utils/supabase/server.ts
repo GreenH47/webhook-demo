@@ -1,3 +1,4 @@
+//utils/supabase/server.ts
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
@@ -12,18 +13,33 @@ export const createClient = async () => {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll(cookiesToSet) {
+
+        // setAll(cookiesToSet) {
+        //   try {
+        //     cookiesToSet.forEach(({ name, value, options }) => {
+        //       cookieStore.set(name, value, options);
+        //     });
+        //   } catch (error) {
+        //     // The `set` method was called from a Server Component.
+        //     // This can be ignored if you have middleware refreshing
+        //     // user sessions.
+        //   }
+        // },
+
+        setAll: (c) => {
           try {
-            cookiesToSet.forEach(({ name, value, options }) => {
-              cookieStore.set(name, value, options);
-            });
-          } catch (error) {
-            // The `set` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
+            c.forEach(({ name, value, options }) =>
+                cookieStore.set(name, value, options)
+            );
+          } catch {
+            /* ignore — Server Components can't set cookies directly.
+               Middleware will refresh sessions anyway. */
           }
         },
+
+
       },
     },
   );
 };
+
