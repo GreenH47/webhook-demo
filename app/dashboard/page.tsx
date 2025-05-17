@@ -6,13 +6,12 @@ import DashboardClient from "./dashboard-client";
 export default async function DashboardPage() {
     const supabase = await createClient();
 
-    const {
-        data: { session },
-    } = await supabase.auth.getSession(); // single network round-trip ✔
+    // Replace getSession with getUser for better security
+    const { data: { user }, error } = await supabase.auth.getUser();
 
-    if (!session) {
+    if (error || !user) {
         redirect(`/sign-in?redirect=${encodeURIComponent("/dashboard")}`);
     }
 
-    return <DashboardClient user={session.user} />;
+    return <DashboardClient user={user} />;
 }

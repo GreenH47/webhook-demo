@@ -1,4 +1,5 @@
 //app/dashboard/action.ts
+
 "use server"
 
 import { createClient } from "@/utils/supabase/server"
@@ -44,11 +45,9 @@ export async function submitMessage(prevState: FormState, formData: FormData): P
     const supabase = await createClient()
 
     // Verify the user is authenticated and matches the userId
-    const {
-        data: { session },
-    } = await supabase.auth.getSession()
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
 
-    if (!session || session.user.id !== userId) {
+    if (authError || !user || user.id !== userId) {
         return {
             errors: {
                 _form: ["Unauthorized. User ID doesn't match the authenticated user."],
@@ -78,6 +77,9 @@ export async function submitMessage(prevState: FormState, formData: FormData): P
 
     // Revalidate the dashboard page to reflect the new message
     revalidatePath("/dashboard")
+
+    // print success message in console
+    console.log("Message submitted successfully:", { name, body, userId })
 
     return {
         success: true,
