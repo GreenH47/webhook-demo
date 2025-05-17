@@ -19,6 +19,12 @@ export const metadata = {
   icons: {
     icon: '/icon.ico',
   },
+
+  // Add a global Content-Security-Policy and enable Trusted Types
+  other: {
+    "Content-Security-Policy":
+        "default-src 'self'; script-src 'self'; object-src 'none'; require-trusted-types-for 'script';",
+  },
 };
 
 const geistSans = Geist({

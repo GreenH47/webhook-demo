@@ -32,6 +32,8 @@ Push it to a public GitHub repository
 Use TypeScript, Tailwind CSS, and modern Next.js conventions
 使用 TypeScript 、 Tailwind CSS 和现代 Next.js 约定
 
+
+
 ✅ 2. Routing & Structure
 ✅ 2. 路由和结构
 Create two main routes using the App Router:
@@ -39,9 +41,11 @@ Create two main routes using the App Router:
 
 / → Landing Page (brief intro + link to dashboard)
 / → 登陆页面（简介 + 仪表板链接）
+![1.png](docs%2F1.png)
 
 /dashboard → Form Input + Data Display
 /dashboard → 表单输入 + 数据显示
+![2.png](docs%2F2.png)
 
 ✅ 3. Form Input  ✅ 3. 表单输入
 On the /dashboard:
@@ -59,6 +63,13 @@ Create a simple form with the following fields:
 
 On submit, send the payload to a webhook endpoint (mock or real)
 提交时，将有效负载发送到 webhook 端点（模拟或真实）
+🖥️ Displays data received from the webhook in real-time or near real-time
+🖥️ 实时或近实时显示从 webhook 接收的数据
+![3.png](docs%2F3.png)
+
+👥 Supports concurrent users — data must be user-specific and not clash across sessions  
+👥 支持并发用户 - 数据必须是特定于用户的，并且不能在会话之间发生冲突  
+![4.png](docs%2F4.png)
 
 ✅ 4. Webhook Setup  ✅ 4. Webhook 设置
 Will be provided  将提供
@@ -68,6 +79,8 @@ Will be provided  将提供
 
 Persist data via Supabase, Firebase, or a simple Express.js API if going full-stack
 如果采用全栈方式，则通过 Supabase 、 Firebase 或简单的 Express.js API 来持久化数据
+![5.png](docs%2F5.png)
+
 
 ## 📦 Sample Deliverables  📦 交付样品
 

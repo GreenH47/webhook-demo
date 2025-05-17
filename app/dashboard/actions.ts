@@ -22,6 +22,15 @@ export type FormState = {
     }
     success?: boolean
     message?: string
+    newMessage?: Message
+}
+
+export type Message = {
+    id: string
+    user_id: string
+    name: string
+    body: string
+    created_at: string
 }
 
 export async function submitMessage(prevState: FormState, formData: FormData): Promise<FormState> {
@@ -45,9 +54,11 @@ export async function submitMessage(prevState: FormState, formData: FormData): P
     const supabase = await createClient()
 
     // Verify the user is authenticated and matches the userId
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    const {
+        data: { user },
+    } = await supabase.auth.getUser()
 
-    if (authError || !user || user.id !== userId) {
+    if (!user || user.id !== userId) {
         return {
             errors: {
                 _form: ["Unauthorized. User ID doesn't match the authenticated user."],
@@ -58,11 +69,15 @@ export async function submitMessage(prevState: FormState, formData: FormData): P
     }
 
     // Insert message into database
-    const { error } = await supabase.from("messages").insert({
-        name,
-        body,
-        user_id: userId,
-    })
+    const { data, error } = await supabase
+        .from("messages")
+        .insert({
+            name,
+            body,
+            user_id: userId,
+        })
+        .select()
+        .single()
 
     if (error) {
         console.error("Error inserting message:", error)
@@ -75,14 +90,15 @@ export async function submitMessage(prevState: FormState, formData: FormData): P
         }
     }
 
+    // Print submitted success message in console
+    console.log("Message submitted successfully:", { name, body, userId })
+
     // Revalidate the dashboard page to reflect the new message
     revalidatePath("/dashboard")
-
-    // print success message in console
-    console.log("Message submitted successfully:", { name, body, userId })
 
     return {
         success: true,
         message: "Message submitted successfully!",
+        newMessage: data as Message,
     }
 }

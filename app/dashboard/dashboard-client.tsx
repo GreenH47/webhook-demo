@@ -1,17 +1,21 @@
 //app/dashboard/dashboard-client.tsx
+
 "use client"
 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { useFormState, useFormStatus } from "react-dom"
-import { submitMessage, type FormState } from "./actions"
+import { submitMessage, type FormState, type Message } from "./actions"
 import { useState, useEffect } from "react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { AlertCircle, CheckCircle2 } from "lucide-react"
+import { AlertCircle, CheckCircle2, Clock } from "lucide-react"
 import type { User } from "@supabase/supabase-js"
 
-type Props = { user: User }
+type Props = {
+    user: User
+    initialMessages: Message[]
+}
 
 // Submit button with loading state
 function SubmitButton() {
@@ -24,7 +28,34 @@ function SubmitButton() {
     )
 }
 
-export default function DashboardClient({ user }: Props) {
+// Format date to a readable format
+function formatDate(dateString: string) {
+    const date = new Date(dateString)
+    return new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+    }).format(date)
+}
+
+// Message component
+function MessageCard({ message }: { message: Message }) {
+    return (
+        <div className="border rounded-md p-4 mb-3">
+            <div className="flex justify-between items-start mb-2">
+                <h3 className="font-medium">{message.name}</h3>
+                <span className="text-xs text-muted-foreground flex items-center">
+          <Clock className="h-3 w-3 mr-1" />
+                    {formatDate(message.created_at)}
+        </span>
+            </div>
+            <p className="text-sm">{message.body}</p>
+        </div>
+    )
+}
+
+export default function DashboardClient({ user, initialMessages }: Props) {
     // Initial form state
     const initialState: FormState = {}
 
@@ -34,6 +65,16 @@ export default function DashboardClient({ user }: Props) {
     // Local form state for controlled inputs
     const [name, setName] = useState("")
     const [message, setMessage] = useState("")
+
+    // State for messages
+    const [messages, setMessages] = useState<Message[]>(initialMessages)
+
+    // Update messages when a new message is submitted
+    useEffect(() => {
+        if (formState.success && formState.newMessage) {
+            setMessages((prev) => [formState.newMessage!, ...prev.slice(0, 2)])
+        }
+    }, [formState.success, formState.newMessage])
 
     // Reset form after successful submission
     useEffect(() => {
@@ -105,10 +146,19 @@ export default function DashboardClient({ user }: Props) {
 
             {/* —— Live Feed —— */}
             <section className="flex flex-col gap-4 w-full">
-                <h2 className="text-2xl font-bold">Live messages</h2>
-                <div className="border rounded-md p-4 text-sm text-muted-foreground">
-                    Nothing to show yet — real-time feed coming soon.
-                </div>
+                <h2 className="text-2xl font-bold">Live messages (latest 3 max)</h2>
+
+                {messages.length > 0 ? (
+                    <div className="w-full">
+                        {messages.map((msg) => (
+                            <MessageCard key={msg.id} message={msg} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="border rounded-md p-4 text-sm text-muted-foreground">
+                        No messages yet. Send your first message above!
+                    </div>
+                )}
             </section>
         </div>
     )
