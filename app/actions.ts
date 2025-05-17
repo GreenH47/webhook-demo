@@ -1,3 +1,4 @@
+//app/actions.ts
 "use server";
 
 import { encodedRedirect } from "@/utils/utils";
@@ -44,6 +45,8 @@ export const signInAction = async (formData: FormData) => {
   const password = formData.get("password") as string;
   const supabase = await createClient();
 
+  const redirectTo = formData.get("redirectTo")?.toString()
+
   const { error } = await supabase.auth.signInWithPassword({
     email,
     password,
@@ -53,7 +56,10 @@ export const signInAction = async (formData: FormData) => {
     return encodedRedirect("error", "/sign-in", error.message);
   }
 
-  return redirect("/protected");
+  // optionally: whitelist internal paths to prevent open redirects
+  if (!redirectTo?.startsWith("/")) return redirect("/dashboard");
+
+  return redirect(<string>redirectTo);   // NO MORE /protected
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {

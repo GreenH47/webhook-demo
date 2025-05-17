@@ -10,7 +10,7 @@ export default async function DashboardPage() {
     } = await supabase.auth.getSession(); // single network round-trip ✔
 
     if (!session) {
-        redirect("/sign-in"); // or whatever route your template uses
+        redirect(`/sign-in?redirect=${encodeURIComponent("/dashboard")}`);
     }
 
     return <DashboardClient user={session.user} />;
